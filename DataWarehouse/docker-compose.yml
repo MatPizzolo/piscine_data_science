@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    environment:
+      POSTGRES_USER: mpizzolo
+      POSTGRES_DB: piscineds
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../data/subject:/docker-entrypoint-initdb.d/subject
+      - ./create_first_tables.sql:/docker-entrypoint-initdb.d/create_first_tables.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+

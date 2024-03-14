@@ -43,3 +43,4 @@ CREATE TABLE IF NOT EXISTS item (
     brand VARCHAR(255)
 );
 
+
